@@ -1,31 +1,50 @@
-import datetime
-import argparse
 import csv
 import random
-import copy
 
-array = []
+def load_people(filename):
+  with open(filename, 'rb') as csvfile:
+    f = csv.reader(csvfile, delimiter=',', quotechar='|')
+    people = []
+    for row in f:
+      # skip header row
+      if row[0] in ['First', 'Last', 'Dept']:
+        continue
+      person = {
+        'name': row[0] + ' ' + row[1],
+        'first': row[0],
+        'last': row[1],
+        'department': row[2]
+      }
+      people.append(person)
+  return people
 
-def populate_database():
-    print 'Starting'
-    with open('new_names.csv', 'rb') as csvfile:
-        csvreader = csv.reader(csvfile, delimiter=',', quotechar='|')
-        for row in csvreader:
-            if row[0] != '' and row[0] != 'Last Name' and row[3] == 'DC' and row[5] == 'YES':
-                first_name = row[1]
-                last_name  = row[0]
-                array.append(first_name + " " + last_name)
-    print_pairings(array)
+def pair(l):
+  pairings = []
+  while len(l) > 1:
+    a = random.choice(l)
+    l.remove(a)
+    b = random.choice(l)
+    l.remove(b)
+    pairings.append(a['name'] + " and " + b['name'])
+  return pairings
 
-def print_pairings(array):
-    while len(array) > 1:
-        a = random.choice(array)
-        array.remove(a)
-        b = random.choice(array)
-        array.remove(b)
-        print a + " and " + b
+def printList(l):
+  for v in l:
+    print v
 
-    print array
+
+def main():
+  # generate list of active people
+  print 'Generating...'
+  people = load_people('active.csv')
+
+  # generate list of active people
+  print 'Pairing...'
+  pairs = pair(people)
+
+  # print
+  printList(pairs)
+  print 'Enjoy!'
 
 if __name__ == "__main__":
-    populate_database()
+  main()
