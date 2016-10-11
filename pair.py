@@ -16,12 +16,15 @@ def load_people(filename):
       # skip header row
       if row[0] in ['First', 'Last', 'Dept']:
         continue
+
+      # create person
       person = {
-        'name': row[0] + ' ' + row[1],
-        'first': row[0],
-        'last': row[1],
+        'name'      : row[0] + ' ' + row[1],
+        'first'     : row[0],
+        'last'      : row[1],
         'department': row[2]
       }
+      # add person to our list of people
       people.append(person)
   return people
 
@@ -38,10 +41,12 @@ def pairAll(l):
     b = random.choice(l)
     l.remove(b)
 
-    # if this pairing hasn't been matched recently
+    # if this pairing has been matched recently
     while hasPaired(a,b):
+      # choose someone new
       c = random.choice(l)
       l.remove(c)
+      # put back other person
       l.append(b)
       b = c
 
@@ -134,4 +139,3 @@ def main():
 
 if __name__ == "__main__":
   main()
-  # fileLongerThan()
