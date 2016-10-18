@@ -61,6 +61,9 @@ def hasPaired(a, b):
   afile = getFileName(a)
   return isInFile(afile, b['name'])
 
+def isSameDept(a, b):
+  return a['department'] == b['department']
+
 # save each name in respective files
 def savePair(a, b):
   afile = getFileName(a)
@@ -86,7 +89,6 @@ def getFileName(a):
 
 # check if a file is longer than a specified length n
 def fileLongerThan(filename, n):
-  print 'checking if', filename, 'is greater than', n, 'lines'
   try:
     lines = sum(1 for line in open(filename))
     if lines > n:
