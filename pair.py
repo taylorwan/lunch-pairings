@@ -33,6 +33,8 @@ def load_people(filename):
 # pair all users in a list
 def pairAll(l):
   pairings = []
+  a = ''
+  b = ''
 
   while len(l) > 1:
     # choose random pairs
@@ -53,6 +55,13 @@ def pairAll(l):
     # save and add the pair to our list
     savePair(a, b)
     pairings.append(a['name'] + ' and ' + b['name'])
+
+  # if there's one person left over, pair them with the last group
+  if len(l) > 0:
+    c = l[0]
+    savePair(a, c)
+    savePair(b, c)
+    pairings[-1] += ' and ' + c['name']
 
   return pairings
 
